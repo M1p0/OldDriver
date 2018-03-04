@@ -15,25 +15,24 @@ int Program_Mutex()
 
     switch (dwRet)
     {
-    case 0:
-    {
-        break;
+        case 0:
+        {
+            break;
+        }
+        case ERROR_ALREADY_EXISTS:
+        {
+            cout << "program is already running" << endl;
+            nRet = 1;
+            break;
+        }
+        default:
+        {
+            cout << "create mutex failed" << endl;
+            nRet = -1;
+            break;
+        }
     }
-    case ERROR_ALREADY_EXISTS:
-    {
-        cout << "program is already running" << endl;
-        nRet = 1;
-        break;
-    }
-    default:
-    {
-        cout << "create mutex failed" << endl;
-        nRet = -1;
-        break;
-    }
-
     return nRet;
-    }
 }
 
 void deleteAllMark(string &s, const string &mark)
@@ -103,9 +102,8 @@ bool Check(string str)    //判断是否完全是英文
         {
             return false;
         }
-        return true;
     }
-    return false;
+    return true;
 }
 
 int main()
