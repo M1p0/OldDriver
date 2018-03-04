@@ -15,22 +15,22 @@ int Program_Mutex()
 
     switch (dwRet)
     {
-        case 0:
-        {
-            break;
-        }
-        case ERROR_ALREADY_EXISTS:
-        {
-            cout << "program is already running" << endl;
-            nRet = 1;
-            break;
-        }
-        default:
-        {
-            cout << "create mutex failed" << endl;
-            nRet = -1;
-            break;
-        }
+    case 0:
+    {
+        break;
+    }
+    case ERROR_ALREADY_EXISTS:
+    {
+        cout << "program is already running" << endl;
+        nRet = 1;
+        break;
+    }
+    default:
+    {
+        cout << "create mutex failed" << endl;
+        nRet = -1;
+        break;
+    }
     }
     return nRet;
 }
@@ -90,18 +90,15 @@ bool CopyToClipboard(string szData)
     return false;
 }
 
-bool Check(string str)    //判断是否完全是英文
+bool Check(string str)    //判断是否完全有非法字符(中文/符号)
 {
     for (unsigned int i = 0; i < str.size(); i++)
     {
-        if (str[i] <= 'Z'&&str[i] >= 'A' || str[i] <= 'z'&&str[i] >= 'a')
-        {
+        if ((str[i] >= 'A'&&str[i] <= 'Z') || (str[i] >= 'a'&&str[i] <= 'z') ||
+            (str[i]>='0'&&str[i]<='9'))
             continue;
-        }
         else
-        {
             return false;
-        }
     }
     return true;
 }
@@ -117,9 +114,10 @@ int main()
     {
         Str = GetTextFromClipboard();
         deleteAllMark(Str, " ");                           //删除空格
-        if (Str.size() == 40 || Str.size() == 32 && Check(Str))
+        if ((Str.size() == 40 || Str.size() == 32) && Check(Str))
         {
             CopyToClipboard(Head + Str);
+            //cout << Str << endl;
         }
         Sleep(1);
     }
